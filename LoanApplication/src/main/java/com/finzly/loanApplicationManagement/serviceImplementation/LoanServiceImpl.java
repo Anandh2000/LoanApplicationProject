@@ -46,6 +46,7 @@ public class LoanServiceImpl implements LoanService {
 			schedule.setPaymentDate(tempPaymentDate);
 			if (details.getPaymentTerm().equals(PaymentTerm.EvenPrincipal)) {
 				schedule = paymentScheduleOfEvenPrinciple(schedule,details.getLoanAmount(),paymentSchedule,tempLoanAmount,details.getInterestRate());
+				tempLoanAmount = tempLoanAmount - schedule.getPrincipal();
 			} 
 			else {
 				schedule = paymentScheduleOfInterestOnly(schedule,details.getLoanAmount(),details.getMaturityDate(),details.getInterestRate());
@@ -105,8 +106,7 @@ public class LoanServiceImpl implements LoanService {
 	//payment schedule for even principle
 	public PaymentSchedule paymentScheduleOfEvenPrinciple(PaymentSchedule schedule,double loanAmount,int paymentSchedule,double tempLoanAmount,double interestRate) {
 		schedule.setPrincipal(loanAmount / paymentSchedule);
-		schedule.setProjectedInterest(tempLoanAmount / interestRate); 
-		tempLoanAmount = tempLoanAmount - schedule.getPrincipal();
+		schedule.setProjectedInterest((tempLoanAmount * interestRate)/100);
 		schedule.setPaymentAmount(schedule.getProjectedInterest() + schedule.getPrincipal());
 		return schedule;
 	}

@@ -40,7 +40,7 @@ public class LoanServiceImpl implements LoanService {
 		int paymentSchedule = details.getTermOfLoanInMonths() / details.getPaymentFrequency();
 		double tempLoanAmount = details.getLoanAmount();
 		LocalDate tempPaymentDate = details.getLoanStartDate();
-		for (int i = 0; i < paymentSchedule; i++) {
+		while(tempPaymentDate.compareTo(details.getMaturityDate())<0) {
 			PaymentSchedule schedule = new PaymentSchedule();
 			tempPaymentDate = tempPaymentDate.plusMonths(details.getPaymentFrequency());
 			schedule.setPaymentDate(tempPaymentDate);

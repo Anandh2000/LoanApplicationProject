@@ -1,0 +1,9 @@
+button{
+    border: none;
+    border-radius: 0px;
+    background-color: var(--primary-color);
+}
+button:hover{
+    background-color: var(--primary-color-light);
+    color: #3366FF;
+}

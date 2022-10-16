@@ -1,0 +1,46 @@
+<div class="table-responsive">
+    <table class="table" >
+      <thead class="table-dark">
+          <tr>
+              <th >Payment Date</th>
+              <th >Principal</th>
+              <th >Projected Interest</th>
+              <th >Payment Status</th>
+              <th >Payment Amount</th>
+              <th > Pay </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor ="let schedule of schedules | paginate:{
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count}; let i = index">
+              <td>{{schedule.paymentDate}}</td>
+              <td>{{schedule.principal}}</td>
+              <td>{{schedule.projectedInterest}}</td>
+              <td>{{schedule.paymentStatus}}</td>
+              <td>{{schedule.paymentAmount}}</td>
+              <td><button class=" btn btn-primary" (click)="onConfirm()"
+                [disabled]="!(schedule.paymentStatus === 'AwaitingPayment')">pay</button>
+              </td>
+
+            </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <div >
+        <select class="form-select mb-3" (change)="onTableSizeChange($event)" aria-label="Default select example">
+          <option selected>Table size</option>
+          <option *ngFor="let size of tableSizes"> {{size}}</option>
+        </select>
+      </div>
+      <div style="flex: 3;">
+        <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        (pageChange)="onTableDataChange($event)">
+  
+      </pagination-controls>
+      </div>
+    </div>
+  </div> 

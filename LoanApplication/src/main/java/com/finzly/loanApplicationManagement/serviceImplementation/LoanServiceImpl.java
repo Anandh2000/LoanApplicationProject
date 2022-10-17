@@ -54,7 +54,7 @@ public class LoanServiceImpl implements LoanService {
 				tempLoanAmount = tempLoanAmount - schedule.getPrincipal();
 			} 
 			else {
-				schedule = paymentScheduleOfInterestOnly(schedule,details.getLoanAmount(),details.getMaturityDate(),details.getInterestRate());
+				schedule = paymentScheduleOfInterestOnly(schedule,details.getLoanAmount(),details.getMaturityDate(),details.getInterestRate(),paymentSchedule);
 			}
 			schedule=paymentStatusSetter(schedule);
 			schedules.add(schedule);
@@ -125,13 +125,13 @@ public class LoanServiceImpl implements LoanService {
 	
 	
 	//payment schedule for interest only
-	public PaymentSchedule paymentScheduleOfInterestOnly(PaymentSchedule schedule,double loanAmount,LocalDate maturityDate,double interestRate) {
+	public PaymentSchedule paymentScheduleOfInterestOnly(PaymentSchedule schedule,double loanAmount,LocalDate maturityDate,double interestRate,int paymentSchedule) {
 		schedule.setPrincipal(0);
 		if(schedule.getPaymentDate().equals(maturityDate)){
 			schedule.setPrincipal(loanAmount);
 		}
 		schedule.setProjectedInterest(
-				((loanAmount*interestRate)/100)/12);
+				((loanAmount*interestRate)/100)/paymentSchedule);
 		double paymentAmount = (schedule.getPaymentDate().equals(maturityDate))
 				? schedule.getProjectedInterest() + loanAmount
 				: schedule.getProjectedInterest();

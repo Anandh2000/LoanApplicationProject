@@ -39,6 +39,7 @@ public class ErrorHandlerService {
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
 	    }
 	    
+	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(CustomerAlreadyExistsException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(CustomerAlreadyExistsException ex) {
 	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);

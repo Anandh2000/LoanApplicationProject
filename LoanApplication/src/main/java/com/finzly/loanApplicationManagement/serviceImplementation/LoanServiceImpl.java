@@ -14,6 +14,7 @@ import com.finzly.loanApplicationManagement.entity.LoanDetails;
 import com.finzly.loanApplicationManagement.entity.PaymentSchedule;
 import com.finzly.loanApplicationManagement.entity.PaymentTerm;
 import com.finzly.loanApplicationManagement.entity.Status;
+import com.finzly.loanApplicationManagement.errorHandler.CustomerAlreadyExistsException;
 import com.finzly.loanApplicationManagement.errorHandler.CustomerNotFoundException;
 import com.finzly.loanApplicationManagement.errorHandler.DateNonExistException;
 import com.finzly.loanApplicationManagement.errorHandler.EmptyListException;
@@ -32,6 +33,10 @@ public class LoanServiceImpl implements LoanService {
 	//method to create a loan for a customer
 	@Override
 	public ResponseEntity<SuccessResponse> createLoan(LoanDetails details){
+		LoanDetails valid = repository.customerRegisterValidation(details.getCustomerId());
+		if(valid != null) {
+			throw new CustomerAlreadyExistsException("Customer Loan is already registered :"+details.getCustomerId());
+		}
 		if(details.getTradeDate().compareTo(details.getLoanStartDate())>0) {
 			throw new DateNonExistException("TradeStart Date should be greater");	
 		}
@@ -74,10 +79,16 @@ public class LoanServiceImpl implements LoanService {
 	
 	//method to get payment schedule deyails for a customer
 	@Override
-	public ResponseEntity<List<PaymentSchedule>> getLoansByCustomerId(int id) {
+	public ResponseEntity<LoanDetails> getLoansByCustomerId(int id) {
 	 LoanDetails  loanDetail= repository.findById(id)
 			 .orElseThrow(() -> new CustomerNotFoundException("Customer Not Found:"+id));
-		return new ResponseEntity<List<PaymentSchedule>>(loanDetail.getPaymentSchedules(), HttpStatus.OK);
+	 
+	 for(PaymentSchedule schedule : loanDetail.getPaymentSchedules()) {
+		 if((schedule.getPaymentDate().equals(LocalDate.now()) &&  !schedule.getPaymentStatus().equals(Status.Paid))) {
+	 			schedule.setPaymentStatus(Status.AwaitingPayment);
+		 }
+	 	}
+		return new ResponseEntity<LoanDetails>(loanDetail, HttpStatus.OK);
 	}
 	
 	//method to update payment status when paid
@@ -95,21 +106,23 @@ public class LoanServiceImpl implements LoanService {
 	//method to set payment status
 	@Override
 	public PaymentSchedule paymentStatusSetter(PaymentSchedule schedule) {
-		if (schedule.getPaymentDate().compareTo(LocalDate.now()) < 0 || schedule.getPaymentStatus().equals(Status.AwaitingPayment)) {
+		if ((schedule.getPaymentDate().compareTo(LocalDate.now()) < 0) || schedule.getPaymentStatus().equals(Status.AwaitingPayment)) {
 			schedule.setPaymentStatus(Status.Paid);
-		} else if (schedule.getPaymentDate().equals(LocalDate.now()) &&  !schedule.getPaymentStatus().equals(Status.Paid)) {
+		} else if (schedule.getPaymentDate().equals(LocalDate.now()) && schedule.getPaymentStatus().equals(Status.Projected)) {
 			schedule.setPaymentStatus(Status.AwaitingPayment);
 		}
 		return schedule;
 	}
 	
+	
 	//payment schedule for even principle
 	public PaymentSchedule paymentScheduleOfEvenPrinciple(PaymentSchedule schedule,double loanAmount,int paymentSchedule,double tempLoanAmount,double interestRate) {
 		schedule.setPrincipal(loanAmount / paymentSchedule);
-		schedule.setProjectedInterest((tempLoanAmount * interestRate)/100);
+		schedule.setProjectedInterest((tempLoanAmount*interestRate)/100); 
 		schedule.setPaymentAmount(schedule.getProjectedInterest() + schedule.getPrincipal());
 		return schedule;
 	}
+	
 	
 	//payment schedule for interest only
 	public PaymentSchedule paymentScheduleOfInterestOnly(PaymentSchedule schedule,double loanAmount,LocalDate maturityDate,double interestRate) {

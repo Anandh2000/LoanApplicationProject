@@ -31,6 +31,7 @@ public class ErrorHandlerService {
 	    	    });
 	    	    return errors;
 	    }
+	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(NoSuchElementException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(NoSuchElementException ex) {
@@ -38,11 +39,18 @@ public class ErrorHandlerService {
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
 	    }
 	    
+	    @ExceptionHandler(CustomerAlreadyExistsException.class)
+	    public ResponseEntity<ErrorResponse> handleInvalidArgument(CustomerAlreadyExistsException ex) {
+	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
+	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.BAD_REQUEST);
+	    }
+	    
+	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(NumberFormatException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(NumberFormatException ex) {
 	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
-	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
+	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.BAD_REQUEST);
 	    }
 	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -55,21 +63,21 @@ public class ErrorHandlerService {
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(CustomerNotFoundException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(CustomerNotFoundException ex) {
-	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
+	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 404);
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
 	    }
 	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(EmptyListException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(EmptyListException ex) {
-	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 200);
+	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 404);
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
 	    }
 	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(DateNonExistException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(DateNonExistException ex) {
-	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 200);
+	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
 	    }
 	    
@@ -77,7 +85,7 @@ public class ErrorHandlerService {
 	    @ExceptionHandler(InvalidFormatException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(InvalidFormatException ex) {
 	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
-	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
+	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.BAD_REQUEST);
 	    }
 	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -86,8 +94,6 @@ public class ErrorHandlerService {
 	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
 	    }
-	    
-	    
 	    
 	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)

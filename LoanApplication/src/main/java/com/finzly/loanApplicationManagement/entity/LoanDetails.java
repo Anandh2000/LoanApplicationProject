@@ -4,22 +4,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 @Entity
 public class LoanDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Min(value=1 ,message="customerId cannot be null")
 	private int customerId;
 	@Min(1000)
 	private double loanAmount;
@@ -30,6 +29,8 @@ public class LoanDetails {
 	private PaymentTerm paymentTerm;
 	private LocalDate  maturityDate;
 	private int paymentFrequency;
+	@Min(1) 
+	@Max(99)
 	private double interestRate;
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "paymentId",referencedColumnName = "customerId")

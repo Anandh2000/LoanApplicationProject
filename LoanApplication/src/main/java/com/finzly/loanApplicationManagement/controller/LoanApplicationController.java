@@ -2,6 +2,8 @@ package com.finzly.loanApplicationManagement.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +25,12 @@ public class LoanApplicationController{
 	@Autowired
 	LoanServiceImpl service;
 	
+	Logger logger = LoggerFactory.getLogger(LoanApplicationController.class);
+	
 	@PostMapping("/createNewLoan")
 	public ResponseEntity<?> loanBook(@RequestBody @Valid LoanDetails details){
 		ResponseEntity<?> storedLoan = service.createLoan(details);
+		logger.trace("created a loan");
 		return storedLoan;
 	}
 	
@@ -41,6 +46,7 @@ public class LoanApplicationController{
 	
 	@GetMapping("/customer/payment/{id}")
 	public Object payment(@PathVariable int id){
+		logger.trace("paid a loan");
 		return service.paymentUpdate(id);
 	}
 	

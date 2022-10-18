@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class LoanDetails {
 	@Id
-	@Min(value=1 ,message="customerId cannot be null")
+	@Min(999)@Max(99999)
 	private int customerId;
 	@Min(1000)
 	private double loanAmount;

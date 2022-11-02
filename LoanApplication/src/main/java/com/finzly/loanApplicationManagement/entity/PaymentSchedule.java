@@ -64,6 +64,14 @@ public class PaymentSchedule {
 	public void setPaymentAmount(double paymentAmount) {
 		this.paymentAmount = paymentAmount;
 	}
+	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
 		return "PaymentSchedule [paymentDate=" + paymentDate + ", principal=" + principal + ", projectedInterest="

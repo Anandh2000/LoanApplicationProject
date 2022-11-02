@@ -50,7 +50,7 @@ public class ErrorHandlerService {
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(NumberFormatException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(NumberFormatException ex) {
-	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
+	    	ErrorResponse errorResponse = new ErrorResponse("Id should be in number format", LocalDateTime.now(), 500);
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.BAD_REQUEST);
 	    }
 	    
@@ -85,7 +85,7 @@ public class ErrorHandlerService {
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(InvalidFormatException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(InvalidFormatException ex) {
-	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 500);
+	    	ErrorResponse errorResponse = new ErrorResponse("One of the format is invalid", LocalDateTime.now(), 500);
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.BAD_REQUEST);
 	    }
 	    
@@ -100,7 +100,14 @@ public class ErrorHandlerService {
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	    public ResponseEntity<ErrorResponse> handleInvalidArgument(MethodArgumentTypeMismatchException ex) {
-	    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), LocalDateTime.now(), 404);
+	    	ErrorResponse errorResponse = new ErrorResponse("Method argument type should be in number", LocalDateTime.now(), 404);
+	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
+	    }
+	    
+	    @ResponseStatus(HttpStatus.BAD_REQUEST)
+	    @ExceptionHandler(Exception.class)
+	    public ResponseEntity<ErrorResponse> handleInvalidArgument(Exception ex) {
+	    	ErrorResponse errorResponse = new ErrorResponse("Error in the response", LocalDateTime.now(), 404);
 	    	    return new ResponseEntity<ErrorResponse>(errorResponse,HttpStatus.NOT_FOUND);
 	    }
 	    

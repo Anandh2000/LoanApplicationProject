@@ -12,8 +12,8 @@ import com.finzly.loanApplicationManagement.response.SuccessResponse;
 public interface LoanService {
 	public ResponseEntity<?> createLoan(LoanDetails details);
 	public ResponseEntity<?> getAllDetails();
-	public ResponseEntity<?> getLoansByCustomerId(int id);
-	public ResponseEntity<List<PaymentSchedule>> paymentUpdate(int id);
+	public ResponseEntity<?> getLoansByCustomerId(String id);
+	public ResponseEntity<List<PaymentSchedule>> paymentUpdate(String id);
 	public PaymentSchedule paymentStatusSetter(PaymentSchedule schedule);
 
 }

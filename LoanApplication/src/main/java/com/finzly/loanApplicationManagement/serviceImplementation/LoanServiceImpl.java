@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.finzly.loanApplicationManagement.Service.LoanService;
@@ -79,21 +80,15 @@ public class LoanServiceImpl implements LoanService {
 	
 	//method to get payment schedule deyails for a customer
 	@Override
-	public ResponseEntity<LoanDetails> getLoansByCustomerId(int id) {
+	public ResponseEntity<LoanDetails> getLoansByCustomerId(String id) {
 	 LoanDetails  loanDetail= repository.findById(id)
 			 .orElseThrow(() -> new CustomerNotFoundException("Customer Not Found:"+id));
-	 
-	 for(PaymentSchedule schedule : loanDetail.getPaymentSchedules()) {
-		 if((schedule.getPaymentDate().equals(LocalDate.now()) &&  !schedule.getPaymentStatus().equals(Status.Paid))) {
-	 			schedule.setPaymentStatus(Status.AwaitingPayment);
-		 }
-	 	}
 		return new ResponseEntity<LoanDetails>(loanDetail, HttpStatus.OK);
 	}
 	
 	//method to update payment status when paid
 	@Override
-	public ResponseEntity<List<PaymentSchedule>> paymentUpdate(int id) {
+	public ResponseEntity<List<PaymentSchedule>> paymentUpdate(String id) {
 		 LoanDetails  loanDetail= repository.findById(id)
 				 .orElseThrow(() -> new CustomerNotFoundException("Customer Not Found:"+id));
 			for(PaymentSchedule schedule : loanDetail.getPaymentSchedules()) {
@@ -108,9 +103,7 @@ public class LoanServiceImpl implements LoanService {
 	public PaymentSchedule paymentStatusSetter(PaymentSchedule schedule) {
 		if ((schedule.getPaymentDate().compareTo(LocalDate.now()) < 0) || schedule.getPaymentStatus().equals(Status.AwaitingPayment)) {
 			schedule.setPaymentStatus(Status.Paid);
-		} else if (schedule.getPaymentDate().equals(LocalDate.now()) && schedule.getPaymentStatus().equals(Status.Projected)) {
-			schedule.setPaymentStatus(Status.AwaitingPayment);
-		}
+		} 
 		return schedule;
 	}
 	
@@ -139,5 +132,18 @@ public class LoanServiceImpl implements LoanService {
 		return schedule;
 	}
 	
-	
+	@Scheduled(cron = "0/1 * * * * ?")
+	 public void scheduleTaskWithCronExpression() {
+		List<LoanDetails> loanDetails = repository.findAll();
+		for(LoanDetails loanDetail : loanDetails) {
+		for(PaymentSchedule schedule : loanDetail.getPaymentSchedules()) {
+			 if((schedule.getPaymentDate().equals(LocalDate.now()) &&  !schedule.getPaymentStatus().equals(Status.Paid))) {
+		 			schedule.setPaymentStatus(Status.AwaitingPayment);
+		 		
+			 }
+		 	}
+		repository.save(loanDetail);
+		}
+		
+	 }	
 }

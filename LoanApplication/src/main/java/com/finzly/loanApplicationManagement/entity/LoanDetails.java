@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -18,9 +19,9 @@ import javax.validation.constraints.Size;
 @Entity
 public class LoanDetails {
 	@Id
-	@Min(999)@Max(99999)
-	private int customerId;
-	@Min(1000)
+	@Pattern(regexp = "^\\d{7,7}$",message = "Customer name is invalids")
+	private String customerId;
+	@Min(1000) @Max(1000000000)
 	private double loanAmount;
 	private LocalDate tradeDate;
 	private LocalDate loanStartDate;
@@ -32,11 +33,11 @@ public class LoanDetails {
 	@Min(1) 
 	@Max(99)
 	private double interestRate;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name = "paymentId",referencedColumnName = "customerId")
 	public List<PaymentSchedule> paymentSchedules = new ArrayList<>();
 	
-	public LoanDetails(int customerId, double loanAmount, LocalDate tradeDate, LocalDate loanStartDate,
+	public LoanDetails(String customerId, double loanAmount, LocalDate tradeDate, LocalDate loanStartDate,
 				int termOfLoanInMonths, PaymentTerm paymentTerm, LocalDate maturityDate, int paymentFrequency, double interestRate,
 				List<PaymentSchedule> paymentSchedules) {
 			super();
@@ -81,11 +82,11 @@ public class LoanDetails {
 	}
 
 
-	public int getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 

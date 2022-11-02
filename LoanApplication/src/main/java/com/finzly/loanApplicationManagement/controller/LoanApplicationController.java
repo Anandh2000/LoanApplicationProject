@@ -40,12 +40,12 @@ public class LoanApplicationController{
 	}
 	
 	@GetMapping("/customer/{id}")
-	public Object customerPaymentDetails(@PathVariable int id){
+	public Object customerPaymentDetails(@PathVariable String id){
 		return service.getLoansByCustomerId(id);
 	}
 	
 	@GetMapping("/customer/payment/{id}")
-	public Object payment(@PathVariable int id){
+	public Object payment(@PathVariable String id){
 		logger.trace("paid a loan");
 		return service.paymentUpdate(id);
 	}

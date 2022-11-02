@@ -11,6 +11,8 @@ import { PaymentScheduleComponent } from './payment-schedule/payment-schedule.co
 import { WelcomeComponent } from './welcome/welcome.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorResponseComponent } from './error-response/error-response.component';
+import { SideMenuBarComponent } from './side-menu-bar/side-menu-bar.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ErrorResponseComponent } from './error-response/error-response.componen
     PaymentScheduleComponent,
     WelcomeComponent,
     HomeComponent,
-    ErrorResponseComponent
+    ErrorResponseComponent,
+    SideMenuBarComponent,
   ],
   imports: [
     BrowserModule,

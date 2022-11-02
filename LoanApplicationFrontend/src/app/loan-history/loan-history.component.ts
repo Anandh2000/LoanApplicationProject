@@ -4,11 +4,13 @@ import { WebServiceService } from '../service/web-service.service';
 
 export class Loan{
   constructor(
-    public customerId:number,
+    public customerId:String,
     public loanAmount:number,
+    public interestRate:number,
     public loanStartDate:Date,
     public maturityDate:Date,
-    public paymentTerm:string
+    public paymentTerm:string,
+    public paymentSchedules:any[]
   )
   {
   }
@@ -33,7 +35,9 @@ export class LoanHistoryComponent implements OnInit {
     this.service.loanHistory().subscribe(
       (response) => {
          console.log(response)
-        this.loans = response}
+        this.loans = response
+        //let product = response['paymentSchedules'].map(response => )
+      }
      )
   }
   onTableDataChange(event:any){
@@ -47,7 +51,7 @@ export class LoanHistoryComponent implements OnInit {
     this.loanList();
   }
 
-  onConfirm(id:number){
+  onConfirm(id:String){
     console.log(id)
     this.router.navigate(['paymentSchedule',id])
 

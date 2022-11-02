@@ -1,13 +1,19 @@
-<div class="table-responsive">
+<app-side-menu-bar></app-side-menu-bar>
+<div class="Head">
+  <h1>Loan History </h1>
+</div>
+<section>
+  <div class="table-responsive">
     <table class="table" >
       <thead class="table-dark">
           <tr>
               <th >Customer Id</th>
               <th >Amount</th>
+              <th >Interest Rate</th>
               <th >Start Date</th>
               <th >Maturity Date</th>
               <th >Payment Term</th>
-              <th > payment schedule</th>
+              <th >payment schedule</th>
             </tr>
           </thead>
           <tbody>
@@ -16,7 +22,8 @@
               currentPage: page,
               totalItems: count}; let i = index">
               <td>{{loan.customerId}}</td>
-              <td>{{loan.loanAmount}}</td>
+              <td>{{loan.loanAmount | currency:"INR" }}</td>
+              <td>{{loan.interestRate}}</td>
               <td>{{loan.loanStartDate}}</td>
               <td>{{loan.maturityDate}}</td>
               <td>{{loan.paymentTerm}}</td>
@@ -36,7 +43,12 @@
         previousLabel="Prev"
         nextLabel="Next"
         (pageChange)="onTableDataChange($event)">
+        <button style="margin-right: 300px;" type="submit" class = "btn btn-primary Back" [routerLink]="['/home']" routerLinkActive="router-link-active">Back</button>
       </pagination-controls>
       </div>
+      <button style="margin-left: 20px;" [routerLink]="['/home']" class="btn btn-primary">Back</button>
     </div>
+    
   </div>
+</section>
+<section></section>

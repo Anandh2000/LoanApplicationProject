@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { errMessage } from '../create-loan/create-loan.component';
 import { Loan } from '../loan-history/loan-history.component';
 
 
@@ -11,7 +12,7 @@ export class WebServiceService {
   constructor(public http:HttpClient) { }
 
   createLoan(value:any){
-    return this.http.post("http://localhost:8080/createNewLoan",value,{responseType: 'text'});
+    return this.http.post<errMessage>("http://localhost:8080/createNewLoan",value);
   }
 
   loanHistory(){ 

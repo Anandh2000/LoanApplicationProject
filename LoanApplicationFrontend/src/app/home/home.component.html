@@ -1,29 +1,31 @@
+<app-side-menu-bar></app-side-menu-bar>
 <div class="container-responsive container">
-    <div class="card-group cards">
-        <div class="card first">
-          <img class="card-img-top first" src="../../assets/Allura - UI Windows.png" alt="Card image cap">
-          <div class="card-body firstBody">
-            <h5 class="card-title">Book Loan</h5>
-            <p class="card-text">Create loans for the customer just by clicking the button</p>
-            <button type="button" class="btn btn-primary" [routerLink]="['/create']" routerLinkActive="router-link-active"  >Trade</button>
-          </div>
-        </div>
-        <div class="card second">
-          <img class="card-img-top second" src="../../assets/Allura - Feedback Session.png" alt="Card image cap">
-          <div class="card-body secondBody">
-            <h5 class="card-title">Loan History</h5> 
-            <p class="card-text">Customer loan details will be displayed here in the table formate</p>
-            <button type="button" class="btn btn-primary" [routerLink]="['/loanDetails']" routerLinkActive="router-link-active" >History</button>
-          </div>
-        </div>
-        <div class="card third">
-          <img class="card-img-top exitImg" src="../../assets/Allura - Social Media.png" alt="Card image cap">
-          <div class="card-body thirdBody">
-            <h5 class="card-title">Exit</h5>
-            <p class="card-text">Have a nice day</p>
-            <br><br>
-            <button  type="button" class="btn btn-primary" [routerLink]="['']" >Exit</button>
-          </div>
+  <div class="card-group cards">
+      <div class="card first">
+        <img class="card-img-top first" src="../../assets/Allura - UI Windows.png" alt="Card image cap">
+        <div class="card-body firstBody">
+          <h5 class="card-title">Book Loan</h5>
+          <p class="card-text">Create loans for the customer just by clicking the button</p>
+          <button type="button" class="btn btn-primary" [routerLink]="['/create']" routerLinkActive="router-link-active"  >Create</button>
         </div>
       </div>
+      <div class="card second">
+        <img class="card-img-top second" src="../../assets/Allura - Feedback Session.png" alt="Card image cap">
+        <div class="card-body secondBody">
+          <h5 class="card-title">Loan History</h5> 
+          <p class="card-text">Customer loan details will be displayed here in the table formate</p>
+          <button type="button" class="btn btn-primary" [routerLink]="['/loanDetails']" routerLinkActive="router-link-active" >History</button>
+        </div>
+      </div>
+      <div class="card third">
+        <img class="card-img-top exitImg" src="../../assets/Allura - Social Media.png" alt="Card image cap">
+        <div class="card-body thirdBody">
+          <h5 class="card-title">Exit</h5>
+          <p class="card-text">Have a nice day</p>
+          <br><br>
+          <button  type="button" class="btn btn-primary" [routerLink]="['']" >Exit</button>
+        </div>
+      </div>
+    </div>
 </div>
+

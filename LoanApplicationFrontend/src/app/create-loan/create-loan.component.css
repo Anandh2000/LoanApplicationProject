@@ -6,6 +6,9 @@ input.ng-invalid.ng-touched{
     font-style: italic;
     font-size: smaller;
 }
+.val{
+    font-size: smaller;
+}
 
 .gridGroup{
     display: grid;
@@ -20,15 +23,20 @@ button{
 
 .card{
     border:none;
-    margin-bottom: 50px;
+    margin-top: 50px;
     padding: 40px;
     position: absolute;
     top: 20%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background: var(--sidebar-color);
-    box-shadow: 0px 0px 6px var(--text-color);
+    background: var(--primary-color-light);
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15);
     color: var(--text-color);
+}
+section{
+    height: 100vh;
+    background-color: var(--sidebar-color);
+    text-align: center;
 }
 
 .container{
@@ -57,8 +65,14 @@ button{
     color: var(--text-color);
 }
 
+img{
+    width: 100px;
+    top :-30px;
+}
+
 .open-popup{
     visibility: visible;
     top:50%;
     transform: translate(-50%,-50%) scale(1);
 }
+

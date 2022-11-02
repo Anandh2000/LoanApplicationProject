@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WebServiceService } from '../service/web-service.service';
@@ -21,6 +21,7 @@ export class Schedule{
   styleUrls: ['./payment-schedule.component.css']
 })
 export class PaymentScheduleComponent implements OnInit {
+  chart:any=[];
   id:number=0
   page:number=1;
   count:number=0;
@@ -34,22 +35,35 @@ export class PaymentScheduleComponent implements OnInit {
   }
   scheduleList(){
     this.id=this.route.snapshot.params['id'];
+    console.log("sdsd")
     this.service.scheduleHistory(this.id).subscribe(
-      (Response) => {
-        console.log(Response.paymentSchedules)
-        this.schedules = Response}
+      res => {
+        console.log(res)
+        this.schedules = res.paymentSchedules
+    }
      )
   }
 
-  onConfirm(){
+  payment(){
     this.id=this.route.snapshot.params['id'];
     this.service.payment(this.id).subscribe(
       (Response) => {
-        console.log(Response.paymentSchedules)
-        this.schedules = Response}
+        console.log(Response)
+        this.schedules = Response
+        let popup:any = document.getElementById("ConfirmationPopup")
+        popup.classList.remove("open-popup");
+        }
 
      )
+  }
+  back(){
+    let popup:any = document.getElementById("ConfirmationPopup")
+    popup.classList.remove("open-popup");
+  }
 
+  onConfirm(){
+    let popup:any = document.getElementById("ConfirmationPopup")
+    popup.classList.add("open-popup");
   }
 
 

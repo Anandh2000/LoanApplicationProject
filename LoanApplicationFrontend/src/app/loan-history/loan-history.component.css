@@ -1,9 +1,45 @@
 button{
     border: none;
     border-radius: 0px;
-    background-color: var(--primary-color);
+    background-color: #3366ff;
 }
 button:hover{
-    background-color: var(--primary-color-light);
+    background-color: var(--sidebar-color);
     color: #3366FF;
+}
+
+.pagination{
+    display: flex;
+    color: var(--text-color);
+}
+
+section{
+    height: 100vh;
+    background-color: var(--sidebar-color);
+    text-align: center;
+}
+
+.table-responsive{
+    position: absolute;
+    top:100px;
+    width: fit-content;
+    left:270px;
+}
+
+.Head{
+    position: absolute;
+    top:1%;
+    left: 40%;
+    color: var(--text-color);
+}
+.table{
+    background-color: var(--primary-color-light);
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15);
+    color: var(--text-color);
+}
+
+@media(max-width:1000px) {
+    .pagination{
+        width: 300px;
+    }
 }

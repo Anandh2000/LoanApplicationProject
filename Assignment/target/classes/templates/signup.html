@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <script>
+        function showError(message) {
+            alert(message);
+        }
+    </script>
+</head>
+<body>
+<h2>Signup</h2>
+<form action="/signup" method="post" onsubmit="return validateForm()">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" name="phone"><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+    <input type="submit" value="Signup">
+</form>
+
+<script>
+    function validateForm() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+        if (password !== confirmPassword) {
+            showError("Passwords do not match");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

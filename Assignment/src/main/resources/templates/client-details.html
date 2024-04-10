@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Details</title>
+</head>
+<body>
+<form action="/submit_details" method="POST">
+    <input type="hidden" id="username" name="username" th:value="${username}">
+    <label for="clientName">Client Name:</label>
+    <input type="text" id="clientName" name="clientName" value="Dual tricks software solution" readonly><br>
+    <label for="industry">Industry:</label>
+    <select name="industry" id="industry">
+        <option value="IT">IT Industry</option>
+        <option value="Automobile">Automobile Industry</option>
+        <option value="Automation">Automation</option>
+        <option value="BPO">BPO Industry</option>
+        <option value="Developing">Developing Industry</option>
+    </select><br>
+    <label for="service">Service Looking For:</label>
+    <select name="service" id="service">
+        <option value="Business Solution">Business Solution</option>
+        <option value="Business Setup">Business Setup</option>
+        <option value="Business Development">Business Development</option>
+    </select><br>
+    <label for="growth">Service Required For:</label>
+    <select name="growth" id="growth">
+        <option value="partial growth">partial growth</option>
+        <option value="full growth">full growth</option>
+        <option value="setup growth">setup growth</option>
+    </select><br>
+    <label for="timeline">When Required:</label>
+    <select name="timeline" id="timeline">
+        <option value="Immediate">Immediate</option>
+        <option value="Within a week">Within a week</option>
+        <option value="Within a month">Within a month</option>
+    </select><br>
+    <textarea name="description" placeholder="Business Description" rows="10" cols="50"></textarea><br>
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
